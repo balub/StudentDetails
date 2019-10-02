@@ -64,4 +64,6 @@ class Student(Resource):
 api.add_resource(AllStudents, '/students')
 api.add_resource(Student, '/student/<string:name>')
 
-app.run(port=5000)
+
+if __name__ == '__main__':
+    app.run()
