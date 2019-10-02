@@ -32,7 +32,8 @@ class AllStudents(Resource):
 class Student(Resource):
     def get(self, name):
         student = collection.find({"name": name})
-        return {
+        for student in student:
+            return {
             "name": student['name'],
             "phNum": student['phNum'],
             "email": student['email'],
@@ -46,5 +47,6 @@ class Student(Resource):
 
 
 api.add_resource(AllStudents, '/students')
+api.add_resource(Student,'/student/<string:name>')
 
 app.run(port=5000)
