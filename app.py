@@ -27,7 +27,7 @@ class AllStudents(Resource):
                 "state": student['state'],
                 "country": student['country']
             })
-        return all_students
+        return all_students, 200
 
 
 class Student(Resource):
@@ -35,16 +35,30 @@ class Student(Resource):
         student = collection.find({"name": name})
         for student in student:
             return {
-                "name": student['name'],
-                "phNum": student['phNum'],
-                "email": student['email'],
-                "edu": student['edu'],
-                "college": student['college'],
-                "city": student['city'],
-                "state": student['state'],
-                "country": student['country'],
-                "size": collection.count()
-            }
+                       "name": student['name'],
+                       "phNum": student['phNum'],
+                       "email": student['email'],
+                       "edu": student['edu'],
+                       "college": student['college'],
+                       "city": student['city'],
+                       "state": student['state'],
+                       "country": student['country'],
+                   }, 200
+
+    def post(self, name):
+        data = request.get_json()
+        student = {
+            "name": name,
+            "phNum": data['phNum'],
+            "email": data['email'],
+            "edu": data['edu'],
+            "college": data['college'],
+            "city": data['city'],
+            "state": data['state'],
+            "country": data['country']
+        }
+        collection.insert_one(student)
+        return {"sucess": "sucessfully added new user"}, 200
 
 
 api.add_resource(AllStudents, '/students')
