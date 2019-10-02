@@ -14,9 +14,9 @@ api = Api(app)
 
 class AllStudents(Resource):
     def get(self):
-        students = collection.find({})
+        students = collection.find({"name": "babu"})
         for student in students:
-            return [{
+            return {
                 "name": student['name'],
                 "phNum": student['phNum'],
                 "email": student['email'],
@@ -24,9 +24,25 @@ class AllStudents(Resource):
                 "college": student['college'],
                 "city": student['city'],
                 "state": student['state'],
-                "country": student['country']
-            }]
+                "country": student['country'],
+                "size": collection.count()
+            }
 
+
+class Student(Resource):
+    def get(self, name):
+        student = collection.find({"name": name})
+        return {
+            "name": student['name'],
+            "phNum": student['phNum'],
+            "email": student['email'],
+            "edu": student['edu'],
+            "college": student['college'],
+            "city": student['city'],
+            "state": student['state'],
+            "country": student['country'],
+            "size": collection.count()
+        }
 
 
 api.add_resource(AllStudents, '/students')
